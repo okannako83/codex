@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+    <title>Fatura Yönetimi</title>
+    <style>
+        table, th, td { border: 1px solid #ccc; border-collapse: collapse; padding: 5px; }
+    </style>
+</head>
+<body>
+<h1>Fatura Yükle</h1>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+<form action="/" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" required>
+    <input type="submit" value="Yükle">
+</form>
+<h2>Kayıtlı Faturalar</h2>
+<table>
+  <tr>
+    <th>Fatura No</th>
+    <th>Tarih</th>
+    <th>Brüt</th>
+    <th>KDV</th>
+    <th>Net</th>
+  </tr>
+  {% for inv in invoices %}
+  <tr>
+    <td>{{ inv.invoice_number }}</td>
+    <td>{{ inv.date }}</td>
+    <td>{{ inv.gross }}</td>
+    <td>{{ inv.vat }}</td>
+    <td>{{ inv.net }}</td>
+  </tr>
+  {% endfor %}
+</table>
+<a href="/export">Excel Olarak İndir</a>
+</body>
+</html>
